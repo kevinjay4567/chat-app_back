@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,4 +22,11 @@ Route::get('/test', function () {
     ], 200);
 });
 
+Route::get('/home', function () {
+  return response()->json([
+    'response' => 'Home page'
+  ], 200);
+});
+
 Route::resource('users', UserController::class);
+Route::resource('messages', MessageController::class);
