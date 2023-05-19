@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -28,5 +29,10 @@ Route::get('/home', function () {
   ], 200);
 });
 
+Route::get('/messages/{id}', [MessageController::class, 'findMessageByUser']);
+Route::get('/contacts', [ContactController::class, 'index']);
+Route::post('/contacts/{id}', [ContactController::class, 'addFriend']);
+Route::get('/contacts/{id}', [ContactController::class, 'findUserFriends']);
 Route::resource('users', UserController::class);
 Route::resource('messages', MessageController::class);
+

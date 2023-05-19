@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\User;
@@ -32,15 +33,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->save();
-        return response()->json([
-            'message' => 'User created successfully'
-        ], 201);
+      $user = new User();
+      $user->name = $request->name;
+      $user->email = $request->email;
+      $user->password = Hash::make($request->password);
+      $user->save();
+      return response()->json([
+        'message' => 'User created successfully'
+      ], 201);
     }
 
     /**

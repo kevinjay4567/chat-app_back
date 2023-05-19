@@ -4,7 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,10 +44,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-  public function message(): HasOne
+  public function messages(): HasMany
   {
-    return $this->hasOne(Message::class);
+    return $this->hasMany(Message::class);
   }
 
+  public function contact(): HasMany
+  {
+    return $this->hasMany(Contact::class);
+  }
 
 }
