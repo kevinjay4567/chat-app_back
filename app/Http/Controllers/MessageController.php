@@ -12,7 +12,7 @@ class MessageController extends Controller
     //
   public function index(): Response
   {
-    $messages = User::find(1)->message;
+    $messages = Message::all();
     return Response($messages, 200);
   }
 
@@ -26,4 +26,11 @@ class MessageController extends Controller
       'message' => 'Message send'
     ], 201);
   }
+
+  public function findMessageByUser(string $id): Response
+  {
+    $userMessage = User::find($id)->messages;  
+    return Response($userMessage, 200);
+  }
+
 }

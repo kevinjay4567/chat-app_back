@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -16,8 +18,44 @@ class UserController extends Controller
     {
         //
         $users = User::all();
-        return Response($users, 200);
+  return Response($users, 200);
     }
+    
+  public function login(Request $request): JsonResponse
+  {
+    $request->validate([
+      'email' => 'required|email',
+      'password' => 'required'
+    ]);
+
+    $user = User::where('email', '=', $request->email)->first();
+
+    if (Hash::check($request->password, $user->password)) {
+      $token = $user->createToken('auth_token')->plainTextToken;
+      return Response()->json([
+        'message' => 'Usuario logueado',
+        'access_token' => $token
+      ], 200);
+    } else {
+      return Response()->json([
+        'error' => 'Password incorrect'
+      ], 400);
+    }
+  }
+
+  public function profile(): JsonResponse
+  {
+    return Response()->json(auth()->user(), 200);
+  }
+
+  public function logout(): JsonResponse
+  {
+    auth()->user()->tokens()->delete();
+
+    return Response()->json([
+      'message' => 'Logout'
+    ]);
+  }
 
     /**
      * Show the form for creating a new resource.
@@ -32,15 +70,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->save();
-        return response()->json([
-            'message' => 'User created successfully'
-        ], 201);
+      $user = new User();
+      $user->name = $request->name;
+      $user->email = $request->email;
+      $user->password = Hash::make($request->password);
+      $user->save();
+      return response()->json([
+        'message' => 'User created successfully'
+      ], 201);
     }
 
     /**
