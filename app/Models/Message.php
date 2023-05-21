@@ -13,6 +13,8 @@ class Message extends Model
   protected $fillable = [
     'body',
     'user_id',
+    'user_receive',
+    'name_send'
   ];
 
   public function user(): HasOne
