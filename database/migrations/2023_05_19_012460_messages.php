@@ -17,6 +17,9 @@ return new class extends Migration
         $table->foreignId('user_id')
               ->constrained()
               ->onDelete('cascade');
+        $table->bigInteger('user_receive')
+              ->unsigned();
+        $table->string('name_send');
         $table->timestamps();
       });
     }
