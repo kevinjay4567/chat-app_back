@@ -14,17 +14,19 @@ class SendMessageEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
-    public $user_send;
+    public $body;
+    public $user_id;
+    public $name_send;
     public $user_receive;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($message, $user_send, $user_receive)
+    public function __construct($body, $user_id, $name_send, $user_receive)
     {
-        $this->message = $message;
-        $this->user_send = $user_send;
+        $this->body = $body;
+        $this->user_id = $user_id;
+        $this->name_send = $name_send;
         $this->user_receive = $user_receive;
     }
 

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
@@ -17,17 +18,22 @@ class ContactController extends Controller
     return Response($contacts, 200);
   }
 
-  public function addFriend(Request $request, string $id): JsonResponse
+  public function addFriend(Request $request): JsonResponse
   {
-    if (strval($request->user) != $id && User::find($request->user)) {
-    $contact = new Contact();
-    $contact->user_contact = $request->user;
-    $contact->user_id = $id;
-    $contact->save();
+    if (Auth::user()->id != $request->user && User::find($request->user)) {
 
-    return Response()->json([
-      'message' => 'Friend add succesfuly'
-    ], 200);
+      $user = Auth::user();
+      $friend = User::find($request->user);
+      $contact = new Contact();
+      $contact->user_id = $user->id;
+      $contact->friend_id = $friend->id;
+      $contact->user_name = $user->name;
+      $contact->friend_name = $friend->name;
+      $contact->save();
+
+      return Response()->json([
+        'message' => 'Friend add succesfuly'
+      ], 200);
 
     } else {
       return Response()->json([
@@ -36,10 +42,12 @@ class ContactController extends Controller
     }
   }
 
-  public function findUserFriends(string $id): Response
+  public function findUserFriends()
   {
-    $contacts = Contact::where('user_id', $id)->get();
+    $contacts = Contact::where('user_id', Auth::user()->id)
+      ->orWhere('friend_id', Auth::user()->id)->get();
 
-    return Response($contacts, 200);
+    return response()->json($contacts, 200);
   }
+
 }
