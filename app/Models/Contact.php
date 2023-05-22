@@ -12,7 +12,9 @@ class Contact extends Model
     
   protected $fillable = [
     'user_id',
-    'user_contact',
+    'friend_id',
+    'user_name',
+    'friend_name'
   ];
 
   public function users(): HasMany

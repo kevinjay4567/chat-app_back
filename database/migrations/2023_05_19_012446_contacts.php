@@ -13,8 +13,11 @@ return new class extends Migration
     {
       Schema::create('contacts', function (Blueprint $table) {
         $table->id();
-        $table->foreignId('user_id')->constrained()->onDelete('cascade');
-        $table->integer('user_contact');
+        $table->foreignId('user_id')
+              ->constrained()->onDelete('cascade');
+        $table->unsignedBigInteger('friend_id');
+        $table->string('user_name');
+        $table->string('friend_name');
         $table->timestamps();
       });
     }

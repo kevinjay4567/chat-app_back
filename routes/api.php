@@ -19,19 +19,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-
   Route::get('/profile', [AuthController::class, 'profile']);
   Route::post('/logout', [AuthController::class, 'logout']);
   Route::post('/send', [MessageController::class, 'sendMessage']);
+  Route::post('/contacts', [ContactController::class, 'addFriend']);
+  Route::get('/friends', [ContactController::class, 'findUserFriends']);
+  Route::post('/messages', [MessageController::class, 'findMessageWithFriend']);
 });
 
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/messages', [MessageController::class, 'index']);
 Route::get('/messages/{id}', [MessageController::class, 'findMessageByUser']);
 Route::get('/contacts', [ContactController::class, 'index']);
-Route::post('/contacts/{id}', [ContactController::class, 'addFriend']);
-Route::get('/contacts/{id}', [ContactController::class, 'findUserFriends']);
 Route::resource('users', UserController::class);
