@@ -27,10 +27,5 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('/messages', [MessageController::class, 'findMessageWithFriend']);
 });
 
-
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-
-Route::get('/messages/{id}', [MessageController::class, 'findMessageByUser']);
-Route::get('/contacts', [ContactController::class, 'index']);
-Route::resource('users', UserController::class);

@@ -21,7 +21,8 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'User created',
-            'token' => $user->createToken("API_TOKEN")->plainTextToken
+            'token' => $user->createToken("API_TOKEN")->plainTextToken,
+            'user' => $user
         ], 200);
     }
 
@@ -48,11 +49,13 @@ class AuthController extends Controller
         ], 401);
     }
 
-    public function profile() {
+    public function profile()
+    {
         return response()->json(Auth::user(), 200);
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
 
         auth()->user()->tokens()->delete();
 
