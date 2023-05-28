@@ -9,17 +9,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Contact extends Model
 {
   use HasFactory;
-    
+
   protected $fillable = [
     'user_id',
     'friend_id',
-    'user_name',
-    'friend_name'
   ];
 
   public function users(): HasMany
   {
     return $this->hasMany(User::class);
   }
-
 }
