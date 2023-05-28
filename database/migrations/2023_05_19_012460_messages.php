@@ -6,29 +6,30 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-      Schema::create('messages', function (Blueprint $table) {
-        $table->id();
-        $table->string('body');
-        $table->foreignId('user_id')
-              ->constrained()
-              ->onDelete('cascade');
-        $table->bigInteger('user_receive')
-              ->unsigned();
-        $table->string('name_send');
-        $table->timestamps();
-      });
-    }
+  /**
+   * Run the migrations.
+   */
+  public function up(): void
+  {
+    Schema::create('messages', function (Blueprint $table) {
+      $table->id();
+      $table->string('body');
+      $table->foreignId('user_id')
+        ->constrained()
+        ->onDelete('cascade');
+      $table->unsignedBigInteger('user_receive');
+      $table->foreign('user_receive')
+        ->references('id')->on('users')
+        ->onDelete('cascade');
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-      Schema::dropIfExists('messages');
-    }
+  /**
+   * Reverse the migrations.
+   */
+  public function down(): void
+  {
+    Schema::dropIfExists('messages');
+  }
 };

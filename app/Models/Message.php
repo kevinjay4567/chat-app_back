@@ -8,13 +8,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Message extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
   protected $fillable = [
     'body',
     'user_id',
     'user_receive',
-    'name_send'
   ];
 
   public function user(): HasOne

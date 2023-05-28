@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ContactResource;
+use App\Http\Resources\FriendResource;
 use App\Models\Contact;
 use App\Models\User;
 use App\Traits\HttpResponses;
@@ -35,6 +36,6 @@ class ContactController extends Controller
     $contacts = Contact::where('user_id', Auth::user()->id)
       ->orWhere('friend_id', Auth::user()->id)->get();
 
-    return response()->json(ContactResource::collection($contacts), 200);
+    return response()->json(FriendResource::collection($contacts), 200);
   }
 }
