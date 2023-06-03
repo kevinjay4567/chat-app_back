@@ -35,16 +35,15 @@ class MessageController extends Controller
   {
     if (User::find($request->user_receive) && Auth::user()->id !== $request->user_receive) {
       event(new SendMessageEvent($request->body, Auth::user()->id, Auth::user()->name, $request->user_receive));
-      $message = Message::create([
+      $message = Message::created([
         'body' => $request->body,
         'user_id' => Auth::user()->id,
         'user_receive' => $request->user_receive
       ]);
 
-      return $this->success(new MessageResource($message), 'Message send', 200);
+      return $this->success($message, 'Message send', 200);
     }
 
     return $this->failed('', 'User not found', 401);
   }
 }
-

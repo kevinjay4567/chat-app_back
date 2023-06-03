@@ -18,8 +18,8 @@ class MessageResource extends JsonResource
     return [
       'id' => $this->id,
       'body' => $this->body,
-      'send' => User::find($this->user_id),
-      'receive' => User::find($this->user_receive),
+      'user_send' => User::find($this->user_id),
+      'user_receive' => User::find($this->user_receive),
     ];
   }
 }
